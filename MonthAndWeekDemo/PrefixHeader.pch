@@ -1,0 +1,35 @@
+//
+//  PrefixHeader.pch
+//  MonthAndWeekDemo
+//
+//  Created by kfw on 2019/7/1.
+//  Copyright © 2019 kfw. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import "UIView+Exting.h"
+
+#endif /* PrefixHeader_pch */
+
+// 上安全区域高
+#define kSafeAreaTop \
+({CGFloat safeAreaTop = 0;\
+if (@available(iOS 11.0, *)) {\
+safeAreaTop = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.top;\
+} else {\
+safeAreaTop = [[UIApplication sharedApplication] statusBarFrame].size.height;\
+}\
+(safeAreaTop);})
+
+// 下安全区域高
+#define kSafeAreaBottom \
+({CGFloat safeAreaBottom = 0;\
+if (@available(iOS 11.0, *)) {\
+safeAreaBottom = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bottom;\
+}\
+(safeAreaBottom);})

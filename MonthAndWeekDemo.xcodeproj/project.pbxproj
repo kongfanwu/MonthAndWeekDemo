@@ -13,6 +13,12 @@
 		F285347722C9E8DD00C2430C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F285347622C9E8DD00C2430C /* Assets.xcassets */; };
 		F285347A22C9E8DD00C2430C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F285347822C9E8DD00C2430C /* LaunchScreen.storyboard */; };
 		F285347D22C9E8DD00C2430C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F285347C22C9E8DD00C2430C /* main.m */; };
+		F285348522C9E90A00C2430C /* XMHMonthAndWeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = F285348322C9E90A00C2430C /* XMHMonthAndWeekView.m */; };
+		F285348822C9E9A100C2430C /* UIView+Exting.m in Sources */ = {isa = PBXBuildFile; fileRef = F285348622C9E9A100C2430C /* UIView+Exting.m */; };
+		F285348B22C9EBC300C2430C /* timg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F285348A22C9EBC300C2430C /* timg.jpg */; };
+		F285348E22C9FBED00C2430C /* XMHMonthAndWeekCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F285348D22C9FBED00C2430C /* XMHMonthAndWeekCollectionView.m */; };
+		F285349122CA028300C2430C /* XMHCollectionWeekCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F285349022CA028300C2430C /* XMHCollectionWeekCell.m */; };
+		F285349422CA028F00C2430C /* XMHCollectionMonthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F285349322CA028F00C2430C /* XMHCollectionMonthCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +32,18 @@
 		F285347922C9E8DD00C2430C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F285347B22C9E8DD00C2430C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F285347C22C9E8DD00C2430C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F285348322C9E90A00C2430C /* XMHMonthAndWeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMHMonthAndWeekView.m; sourceTree = "<group>"; };
+		F285348422C9E90A00C2430C /* XMHMonthAndWeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMHMonthAndWeekView.h; sourceTree = "<group>"; };
+		F285348622C9E9A100C2430C /* UIView+Exting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Exting.m"; sourceTree = "<group>"; };
+		F285348722C9E9A100C2430C /* UIView+Exting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Exting.h"; sourceTree = "<group>"; };
+		F285348922C9E9BD00C2430C /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		F285348A22C9EBC300C2430C /* timg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = timg.jpg; sourceTree = "<group>"; };
+		F285348C22C9FBED00C2430C /* XMHMonthAndWeekCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMHMonthAndWeekCollectionView.h; sourceTree = "<group>"; };
+		F285348D22C9FBED00C2430C /* XMHMonthAndWeekCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMHMonthAndWeekCollectionView.m; sourceTree = "<group>"; };
+		F285348F22CA028300C2430C /* XMHCollectionWeekCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMHCollectionWeekCell.h; sourceTree = "<group>"; };
+		F285349022CA028300C2430C /* XMHCollectionWeekCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMHCollectionWeekCell.m; sourceTree = "<group>"; };
+		F285349222CA028F00C2430C /* XMHCollectionMonthCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMHCollectionMonthCell.h; sourceTree = "<group>"; };
+		F285349322CA028F00C2430C /* XMHCollectionMonthCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMHCollectionMonthCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,15 +76,27 @@
 		F285346C22C9E8DD00C2430C /* MonthAndWeekDemo */ = {
 			isa = PBXGroup;
 			children = (
+				F285348A22C9EBC300C2430C /* timg.jpg */,
+				F285348722C9E9A100C2430C /* UIView+Exting.h */,
+				F285348622C9E9A100C2430C /* UIView+Exting.m */,
 				F285346D22C9E8DD00C2430C /* AppDelegate.h */,
 				F285346E22C9E8DD00C2430C /* AppDelegate.m */,
 				F285347022C9E8DD00C2430C /* ViewController.h */,
 				F285347122C9E8DD00C2430C /* ViewController.m */,
+				F285348422C9E90A00C2430C /* XMHMonthAndWeekView.h */,
+				F285348322C9E90A00C2430C /* XMHMonthAndWeekView.m */,
+				F285348C22C9FBED00C2430C /* XMHMonthAndWeekCollectionView.h */,
+				F285348D22C9FBED00C2430C /* XMHMonthAndWeekCollectionView.m */,
+				F285348F22CA028300C2430C /* XMHCollectionWeekCell.h */,
+				F285349022CA028300C2430C /* XMHCollectionWeekCell.m */,
+				F285349222CA028F00C2430C /* XMHCollectionMonthCell.h */,
+				F285349322CA028F00C2430C /* XMHCollectionMonthCell.m */,
 				F285347322C9E8DD00C2430C /* Main.storyboard */,
 				F285347622C9E8DD00C2430C /* Assets.xcassets */,
 				F285347822C9E8DD00C2430C /* LaunchScreen.storyboard */,
 				F285347B22C9E8DD00C2430C /* Info.plist */,
 				F285347C22C9E8DD00C2430C /* main.m */,
+				F285348922C9E9BD00C2430C /* PrefixHeader.pch */,
 			);
 			path = MonthAndWeekDemo;
 			sourceTree = "<group>";
@@ -128,6 +158,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F285348B22C9EBC300C2430C /* timg.jpg in Resources */,
 				F285347A22C9E8DD00C2430C /* LaunchScreen.storyboard in Resources */,
 				F285347722C9E8DD00C2430C /* Assets.xcassets in Resources */,
 				F285347522C9E8DD00C2430C /* Main.storyboard in Resources */,
@@ -142,8 +173,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F285347222C9E8DD00C2430C /* ViewController.m in Sources */,
+				F285348522C9E90A00C2430C /* XMHMonthAndWeekView.m in Sources */,
+				F285349422CA028F00C2430C /* XMHCollectionMonthCell.m in Sources */,
+				F285349122CA028300C2430C /* XMHCollectionWeekCell.m in Sources */,
+				F285348822C9E9A100C2430C /* UIView+Exting.m in Sources */,
 				F285347D22C9E8DD00C2430C /* main.m in Sources */,
 				F285346F22C9E8DD00C2430C /* AppDelegate.m in Sources */,
+				F285348E22C9FBED00C2430C /* XMHMonthAndWeekCollectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +322,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				GCC_PREFIX_HEADER = /Users/kfw/Documents/Demo/MonthAndWeekDemo/MonthAndWeekDemo/PrefixHeader.pch;
 				INFOPLIST_FILE = MonthAndWeekDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -302,6 +339,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				GCC_PREFIX_HEADER = /Users/kfw/Documents/Demo/MonthAndWeekDemo/MonthAndWeekDemo/PrefixHeader.pch;
 				INFOPLIST_FILE = MonthAndWeekDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
