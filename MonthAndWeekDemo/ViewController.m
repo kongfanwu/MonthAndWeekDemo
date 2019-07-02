@@ -34,6 +34,7 @@
     _tableView.dataSource = self;
     _tableView.delegate = self;
     [self.view addSubview:_tableView];
+    _tableView.backgroundColor = UIColor.blueColor;
     
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self.monthAndWeekView action:@selector(handleScopeGesture:)];
     panGesture.delegate = self;

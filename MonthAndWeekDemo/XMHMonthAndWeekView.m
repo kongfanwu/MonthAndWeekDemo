@@ -142,7 +142,8 @@ CGFloat kDateBarHeight = 50.f;
         
         _collectionView.xmhScrollDirection = UICollectionViewScrollDirectionHorizontal;
         
-        [self foldStateSelectCellPositionAlign];
+        // 在collectionView 刷新完后设置偏移量
+        [self performSelector:@selector(foldStateSelectCellPositionAlign) withObject:nil afterDelay:0.01];
     }
     // 收起状态
     else {
@@ -200,7 +201,7 @@ CGFloat kDateBarHeight = 50.f;
     
     // 计算需要滑动的距离 = upOffsetYGap - 目标位置在第几屏高（屏高是 _originHeight），之前的屏高。例如在第5屏，之前的屏高就是 （4 * _originHeight）
     CGFloat computeScrollGap = upOffsetYGap - jiPingHeight;
-    CGFloat baiFenBi = computeScrollGap / (_originHeight - _cellMinHeight);
+    CGFloat baiFenBi = computeScrollGap / (_originHeight - (_cellMinHeight - kDateBarHeight));
     // 180 - translation(10) * 0.72
     CGFloat upOffsetY = upOffsetYGap - (baiFenBi * translation);
 //    NSLog(@"translation:%f upOffsetY:%lf baiFenBi:%lf", translation, upOffsetY, baiFenBi);
@@ -221,6 +222,7 @@ CGFloat kDateBarHeight = 50.f;
     NSInteger lineCount = _collectionView.lastFrame.origin.y / ((_cellMinHeight - kDateBarHeight) + _cellMinimumLineSpacing);
     // 便宜X位置 = 每个按钮宽 * 每行有几个按钮 * 几行.  只需要计算选中按钮之前有几行的偏移量即可。
     CGFloat offsetX = ((_collectionView.lastFrame.size.width + _cellMinimumInteritemSpacing) * _lineItemCount) * lineCount;
+    NSLog(@"foldStateSelectCellPositionAlign:%lf", offsetX);
     [_collectionView setContentOffset:CGPointMake(offsetX, _collectionView.contentOffset.y)];
 }
 
