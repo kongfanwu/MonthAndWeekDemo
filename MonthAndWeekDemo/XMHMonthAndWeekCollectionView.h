@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class XMHMonthAndWeekModel;
 
 /**
  日历类型
@@ -32,6 +33,9 @@ NS_ASSUME_NONNULL_BEGIN
  UICollectionViewScrollDirectionHorizontal 左右滑动，收起状态。
  */
 @property (nonatomic) UICollectionViewScrollDirection xmhScrollDirection;
+
+/** <##> */
+@property (nonatomic, strong) NSArray <XMHMonthAndWeekModel *> *dataArray;
 
 /**
  返回cell 高

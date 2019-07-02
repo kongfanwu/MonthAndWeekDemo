@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class XMHMonthAndWeekModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface XMHCollectionMonthCell : UICollectionViewCell
+- (void)configModel:(XMHMonthAndWeekModel *)model;
 
 @end
 

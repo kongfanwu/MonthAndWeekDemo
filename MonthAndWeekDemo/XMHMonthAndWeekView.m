@@ -24,8 +24,6 @@ CGFloat kDateBarHeight = 50.f;
 @property (nonatomic) NSUInteger lineItemCount;
 /** 开始滑动偏移量 */
 @property(nonatomic) CGPoint beginContentOffset;
-/** <##> */
-@property (nonatomic, strong) UIView *dateNavBarView;
 @end
 
 @implementation XMHMonthAndWeekView
@@ -34,11 +32,11 @@ CGFloat kDateBarHeight = 50.f;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.originHeight = self.height - kDateBarHeight;
         _isFold = YES;
+        _type = XMHMonthAndWeekCollectionViewTypeWeek;
+        self.originHeight = self.height - kDateBarHeight;
         
-        self.dateNavBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, kDateBarHeight)];
-        _dateNavBarView.backgroundColor = UIColor.orangeColor;
+        self.dateNavBarView = [[XMHDateNavBarView alloc] initWithFrame:CGRectMake(0, 0, self.width, kDateBarHeight)];
         [self addSubview:_dateNavBarView];
         
         UICollectionViewScrollDirection direction = UICollectionViewScrollDirectionVertical;
@@ -61,6 +59,11 @@ CGFloat kDateBarHeight = 50.f;
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.collectionView.frame = CGRectMake(0, kDateBarHeight, self.width, self.height - kDateBarHeight);
+}
+
+- (void)setType:(XMHMonthAndWeekCollectionViewType)type {
+    _type = type;
+    _collectionView.type = _type;
 }
 
 #pragma mark - Public

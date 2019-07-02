@@ -19,6 +19,11 @@
 		F285348E22C9FBED00C2430C /* XMHMonthAndWeekCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F285348D22C9FBED00C2430C /* XMHMonthAndWeekCollectionView.m */; };
 		F285349122CA028300C2430C /* XMHCollectionWeekCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F285349022CA028300C2430C /* XMHCollectionWeekCell.m */; };
 		F285349422CA028F00C2430C /* XMHCollectionMonthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F285349322CA028F00C2430C /* XMHCollectionMonthCell.m */; };
+		F28534BC22CB59C300C2430C /* XMHDateNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = F28534BB22CB59C300C2430C /* XMHDateNavBarView.m */; };
+		F28534C422CB5C5B00C2430C /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = F28534C122CB5C5B00C2430C /* NSDate+Extension.m */; };
+		F28534C522CB5C5B00C2430C /* NSDate-Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = F28534C322CB5C5B00C2430C /* NSDate-Helper.m */; };
+		F28534C822CB7D9900C2430C /* XMHMonthAndWeekModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F28534C722CB7D9900C2430C /* XMHMonthAndWeekModel.m */; };
+		F28534CB22CB82C300C2430C /* ColorTools.m in Sources */ = {isa = PBXBuildFile; fileRef = F28534CA22CB82C300C2430C /* ColorTools.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +49,16 @@
 		F285349022CA028300C2430C /* XMHCollectionWeekCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMHCollectionWeekCell.m; sourceTree = "<group>"; };
 		F285349222CA028F00C2430C /* XMHCollectionMonthCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMHCollectionMonthCell.h; sourceTree = "<group>"; };
 		F285349322CA028F00C2430C /* XMHCollectionMonthCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMHCollectionMonthCell.m; sourceTree = "<group>"; };
+		F28534BA22CB59C300C2430C /* XMHDateNavBarView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMHDateNavBarView.h; sourceTree = "<group>"; };
+		F28534BB22CB59C300C2430C /* XMHDateNavBarView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMHDateNavBarView.m; sourceTree = "<group>"; };
+		F28534C022CB5C5B00C2430C /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
+		F28534C122CB5C5B00C2430C /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
+		F28534C222CB5C5B00C2430C /* NSDate-Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate-Helper.h"; sourceTree = "<group>"; };
+		F28534C322CB5C5B00C2430C /* NSDate-Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate-Helper.m"; sourceTree = "<group>"; };
+		F28534C622CB7D9900C2430C /* XMHMonthAndWeekModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMHMonthAndWeekModel.h; sourceTree = "<group>"; };
+		F28534C722CB7D9900C2430C /* XMHMonthAndWeekModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMHMonthAndWeekModel.m; sourceTree = "<group>"; };
+		F28534C922CB82C200C2430C /* ColorTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorTools.h; sourceTree = "<group>"; };
+		F28534CA22CB82C300C2430C /* ColorTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorTools.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,15 +91,17 @@
 		F285346C22C9E8DD00C2430C /* MonthAndWeekDemo */ = {
 			isa = PBXGroup;
 			children = (
-				F285348A22C9EBC300C2430C /* timg.jpg */,
-				F285348722C9E9A100C2430C /* UIView+Exting.h */,
-				F285348622C9E9A100C2430C /* UIView+Exting.m */,
+				F28534CC22CB82D000C2430C /* Category */,
 				F285346D22C9E8DD00C2430C /* AppDelegate.h */,
 				F285346E22C9E8DD00C2430C /* AppDelegate.m */,
 				F285347022C9E8DD00C2430C /* ViewController.h */,
 				F285347122C9E8DD00C2430C /* ViewController.m */,
+				F28534C622CB7D9900C2430C /* XMHMonthAndWeekModel.h */,
+				F28534C722CB7D9900C2430C /* XMHMonthAndWeekModel.m */,
 				F285348422C9E90A00C2430C /* XMHMonthAndWeekView.h */,
 				F285348322C9E90A00C2430C /* XMHMonthAndWeekView.m */,
+				F28534BA22CB59C300C2430C /* XMHDateNavBarView.h */,
+				F28534BB22CB59C300C2430C /* XMHDateNavBarView.m */,
 				F285348C22C9FBED00C2430C /* XMHMonthAndWeekCollectionView.h */,
 				F285348D22C9FBED00C2430C /* XMHMonthAndWeekCollectionView.m */,
 				F285348F22CA028300C2430C /* XMHCollectionWeekCell.h */,
@@ -99,6 +116,22 @@
 				F285348922C9E9BD00C2430C /* PrefixHeader.pch */,
 			);
 			path = MonthAndWeekDemo;
+			sourceTree = "<group>";
+		};
+		F28534CC22CB82D000C2430C /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				F285348A22C9EBC300C2430C /* timg.jpg */,
+				F28534C922CB82C200C2430C /* ColorTools.h */,
+				F28534CA22CB82C300C2430C /* ColorTools.m */,
+				F285348722C9E9A100C2430C /* UIView+Exting.h */,
+				F285348622C9E9A100C2430C /* UIView+Exting.m */,
+				F28534C222CB5C5B00C2430C /* NSDate-Helper.h */,
+				F28534C322CB5C5B00C2430C /* NSDate-Helper.m */,
+				F28534C022CB5C5B00C2430C /* NSDate+Extension.h */,
+				F28534C122CB5C5B00C2430C /* NSDate+Extension.m */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,11 +207,16 @@
 			files = (
 				F285347222C9E8DD00C2430C /* ViewController.m in Sources */,
 				F285348522C9E90A00C2430C /* XMHMonthAndWeekView.m in Sources */,
+				F28534CB22CB82C300C2430C /* ColorTools.m in Sources */,
+				F28534BC22CB59C300C2430C /* XMHDateNavBarView.m in Sources */,
 				F285349422CA028F00C2430C /* XMHCollectionMonthCell.m in Sources */,
+				F28534C822CB7D9900C2430C /* XMHMonthAndWeekModel.m in Sources */,
 				F285349122CA028300C2430C /* XMHCollectionWeekCell.m in Sources */,
 				F285348822C9E9A100C2430C /* UIView+Exting.m in Sources */,
+				F28534C422CB5C5B00C2430C /* NSDate+Extension.m in Sources */,
 				F285347D22C9E8DD00C2430C /* main.m in Sources */,
 				F285346F22C9E8DD00C2430C /* AppDelegate.m in Sources */,
+				F28534C522CB5C5B00C2430C /* NSDate-Helper.m in Sources */,
 				F285348E22C9FBED00C2430C /* XMHMonthAndWeekCollectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

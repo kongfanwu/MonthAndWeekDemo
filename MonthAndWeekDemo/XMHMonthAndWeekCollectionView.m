@@ -9,13 +9,10 @@
 #import "XMHMonthAndWeekCollectionView.h"
 #import "XMHCollectionWeekCell.h"
 #import "XMHCollectionMonthCell.h"
+#import "XMHMonthAndWeekModel.h"
 
 @interface XMHMonthAndWeekCollectionView() <UICollectionViewDelegate, UICollectionViewDataSource>
 
-/** <##> */
-@property (nonatomic, strong) UICollectionViewCell *lastCell;
-/** <##> */
-@property (nonatomic, strong) NSIndexPath *lastIndexPath;
 @end
 
 @implementation XMHMonthAndWeekCollectionView
@@ -35,6 +32,11 @@
         
     }
     return self;
+}
+
+- (void)setDataArray:(NSArray <XMHMonthAndWeekModel *> *)dataArray {
+    _dataArray = dataArray;
+    [self reloadData];
 }
 
 #pragma mark - Private
@@ -99,25 +101,21 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 40;
+    return _dataArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    XMHMonthAndWeekModel *model = _dataArray[indexPath.item];
     if (_type == XMHMonthAndWeekCollectionViewTypeWeek) {
         XMHCollectionWeekCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"XMHCollectionWeekCellIdentifier" forIndexPath:indexPath];
-        cell.backgroundColor = [UIColor colorWithRed:arc4random_uniform(150)/255.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:1];
         cell.label.text = [NSString stringWithFormat:@"%ld",indexPath.item];
-        if (_lastIndexPath && indexPath.item == _lastIndexPath.item) {
-            cell.backgroundColor = UIColor.redColor;
-        }
+        [cell configModel:model];
         return cell;
     } else {
         XMHCollectionMonthCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"XMHCollectionMonthCellIdentifier" forIndexPath:indexPath];
         cell.backgroundColor = [UIColor colorWithRed:arc4random_uniform(150)/255.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:1];
-        if (_lastIndexPath && indexPath.item == _lastIndexPath.item) {
-            cell.backgroundColor = UIColor.redColor;
-        }
+        [cell configModel:model];
         return cell;
     }
     return UICollectionViewCell.new;
@@ -155,16 +153,11 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.lastCell) {
-        self.lastCell.backgroundColor = [UIColor colorWithRed:arc4random_uniform(255)/255.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:1];
-    }
-    
-    self.lastIndexPath = indexPath;
-    
+    XMHMonthAndWeekModel *model = _dataArray[indexPath.item];
+    model.select = !model.select;
+    [collectionView reloadData];
+
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    self.lastCell = cell;
-    cell.backgroundColor = UIColor.redColor;
-    
     self.lastFrame = cell.frame;
 }
 

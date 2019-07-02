@@ -7,7 +7,11 @@
 //
 
 #import "XMHCollectionMonthCell.h"
+#import "XMHMonthAndWeekModel.h"
 
 @implementation XMHCollectionMonthCell
+- (void)configModel:(XMHMonthAndWeekModel *)model {
+    
+}
 
 @end

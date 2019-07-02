@@ -8,12 +8,15 @@
 
 #import "ViewController.h"
 #import "XMHMonthAndWeekView.h"
+#import "XMHMonthAndWeekModel.h"
 
 @interface ViewController ()<UITableViewDataSource,UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) UIPanGestureRecognizer *scopeGesture;
 /** <##> */
 @property (nonatomic, strong) XMHMonthAndWeekView *monthAndWeekView;
+/** <##> */
+@property (nonatomic, strong) NSDate *currentDate;
 @end
 
 @implementation ViewController
@@ -21,14 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.monthAndWeekView = [[XMHMonthAndWeekView alloc] initWithFrame:CGRectMake(0, kSafeAreaTop, self.view.width, 300 + kDateBarHeight)];
-    [self.view addSubview:_monthAndWeekView];
-    __weak typeof(self) _self = self;
-    [_monthAndWeekView setFrameDidChangeBlock:^{
-        __strong typeof(_self) self = _self;
-        self.tableView.frame = CGRectMake(0, self.monthAndWeekView.bottom, self.view.width, self.view.height - self.monthAndWeekView.height - kSafeAreaTop - kSafeAreaBottom);
-    }];
+    [self loadTopView];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _monthAndWeekView.bottom, self.view.width, self.view.height - _monthAndWeekView.height - kSafeAreaTop - kSafeAreaBottom) style:UITableViewStylePlain];
     _tableView.dataSource = self;
@@ -45,6 +41,59 @@
     
     // While the scope gesture begin, the pan gesture of tableView should cancel.
     [self.tableView.panGestureRecognizer requireGestureRecognizerToFail:panGesture];
+}
+
+- (void)loadTopView {
+    self.monthAndWeekView = [[XMHMonthAndWeekView alloc] initWithFrame:CGRectMake(0, kSafeAreaTop, self.view.width, 300 + kDateBarHeight)];
+    _monthAndWeekView.type = XMHMonthAndWeekCollectionViewTypeWeek;
+    [self.view addSubview:_monthAndWeekView];
+    
+    __weak typeof(self) _self = self;
+    [_monthAndWeekView setFrameDidChangeBlock:^{
+        __strong typeof(_self) self = _self;
+        self.tableView.frame = CGRectMake(0, self.monthAndWeekView.bottom, self.view.width, self.view.height - self.monthAndWeekView.height - kSafeAreaTop - kSafeAreaBottom);
+    }];
+   
+    [_monthAndWeekView.dateNavBarView setChangeYearBlock:^(NSInteger tag) {
+        __strong typeof(_self) self = _self;
+        if (self.monthAndWeekView.type == XMHMonthAndWeekCollectionViewTypeWeek) {
+            NSUInteger year = self.currentDate.year;
+            // 左
+            if (tag == 1) {
+                year--;
+            }
+            // 右
+            else if (tag == 2) {
+                year++;
+            }
+            self.currentDate = [NSDate dateFromYear:(int)year Month:1 Day:1];
+            [self getData];
+        } else {
+            
+        }
+    }];
+    
+    
+    self.currentDate = [NSDate date];
+    [self getData];
+}
+
+- (void)getData {
+    if (_monthAndWeekView.type == XMHMonthAndWeekCollectionViewTypeWeek) {
+        [_monthAndWeekView.dateNavBarView setYear:_currentDate.getYear];
+        __block NSMutableArray *dataArray = NSMutableArray.new;
+        [[_currentDate getAllWeekDate] enumerateObjectsUsingBlock:^(NSArray *item, NSUInteger idx, BOOL * _Nonnull stop) {
+            XMHMonthAndWeekModel *model = XMHMonthAndWeekModel.new;
+            model.firstDate = item.firstObject;
+            model.lastDate = item.lastObject;
+            model.title = [NSString stringWithFormat:@"第%@周", [[XMHMonthAndWeekModel sharedformatter] stringFromNumber:@(idx + 1)]];
+            model.subTitle = [NSString stringWithFormat:@"%ld/%ld-%ld/%ld", model.firstDate.getMonth, model.firstDate.getDay, model.lastDate.getMonth, model.lastDate.getDay];
+            [dataArray addObject:model];
+        }];
+        _monthAndWeekView.collectionView.dataArray = dataArray;
+    } else {
+        
+    }
 }
 
 #pragma mark - <UIGestureRecognizerDelegate>
