@@ -36,8 +36,6 @@
         _type = XMHMonthAndWeekCollectionViewTypeWeek;
         self.originHeight = self.height;
         
-
-        
         UICollectionViewScrollDirection direction = UICollectionViewScrollDirectionVertical;
         UICollectionViewFlowLayout *layout = [XMHMonthAndWeekCollectionView layoutFromScrollDirection:direction];
         self.collectionView = [[XMHMonthAndWeekCollectionView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.originHeight) collectionViewLayout:layout];
@@ -242,7 +240,11 @@
     NSInteger lineCount = _collectionView.lastFrame.origin.y / (_cellMinHeight + _cellMinimumLineSpacing);
     // 便宜X位置 = 每个按钮宽 * 每行有几个按钮 * 几行.  只需要计算选中按钮之前有几行的偏移量即可。
     CGFloat offsetX = ((_collectionView.lastFrame.size.width + _cellMinimumInteritemSpacing) * _lineItemCount) * lineCount;
-//    NSLog(@"foldStateSelectCellPositionAlign:%lf", offsetX);
+    if (_type == XMHMonthAndWeekCollectionViewTypeMonth && lineCount > 0) {
+        // 与item间间距，与边缘，不同。
+        offsetX -= _cellMinimumInteritemSpacing;
+    }
+    NSLog(@"foldStateSelectCellPositionAlign:%lf", offsetX);
     [_collectionView setContentOffset:CGPointMake(offsetX, _collectionView.contentOffset.y)];
 }
 

@@ -31,6 +31,8 @@
         [self registerClass:[XMHCollectionWeekCell class] forCellWithReuseIdentifier:@"XMHCollectionWeekCellIdentifier"];
         [self registerClass:[XMHCollectionMonthCell class] forCellWithReuseIdentifier:@"XMHCollectionMonthCellIdentifier"];
         
+        self.lastFrame = CGRectZero;
+        
     }
     return self;
 }
@@ -95,6 +97,15 @@
     return 4;
 }
 
++ (UIEdgeInsets)insetForSectionType:(XMHMonthAndWeekCollectionViewType)type {
+    if (type == XMHMonthAndWeekCollectionViewTypeWeek) {
+        return UIEdgeInsetsMake(0, 15, 0, 15);
+    } else {
+        return UIEdgeInsetsMake(0, 20, 0, 20);
+    }
+    return UIEdgeInsetsZero;
+}
+
 /**
  通过滑动方向创建layout
  */
@@ -129,23 +140,20 @@
 #pragma mark - UICollectionViewDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat minimumInteritemSpacing = [self.class cellMinimumInteritemSpacingType:_type];
+    NSInteger lineItemCount = [self.class lineItemCountType:_type];
+    UIEdgeInsets sectionEdge = [self.class insetForSectionType:_type];
     if (_type == XMHMonthAndWeekCollectionViewTypeWeek) {
-        NSInteger lineItemCount = [self.class lineItemCountType:_type];
-        CGFloat itemW = (collectionView.width - (10 * (lineItemCount - 1)) - 15 * 2) / lineItemCount;
+        CGFloat itemW = (collectionView.width - (minimumInteritemSpacing * (lineItemCount - 1)) - (sectionEdge.left + sectionEdge.right)) / lineItemCount;
         return CGSizeMake(itemW, [self.class cellHeightType:_type]);
     } else {
-        NSInteger lineItemCount = [self.class lineItemCountType:_type];;
-        CGFloat itemW = (collectionView.width - (27 * (lineItemCount - 1)) - 20 * 2) / lineItemCount;
+        CGFloat itemW = (collectionView.width - (minimumInteritemSpacing * (lineItemCount - 1)) - (sectionEdge.left + sectionEdge.right)) / lineItemCount;
         return CGSizeMake(itemW, [self.class cellHeightType:_type]);
     }
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    if (_type == XMHMonthAndWeekCollectionViewTypeWeek) {
-        return UIEdgeInsetsMake(0, 15, 0, 15);
-    } else {
-        return UIEdgeInsetsMake(0, 20, 0, 20);
-    }
+    return [self.class insetForSectionType:_type];
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
@@ -158,8 +166,11 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    self.lastFrame = cell.frame;
+    // 展开方式记录选中按钮位置
+    if (_xmhScrollDirection == UICollectionViewScrollDirectionVertical) {
+        UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+        self.lastFrame = cell.frame;
+    }
     
     XMHMonthAndWeekModel *model = _dataArray[indexPath.item];
     model.select = !model.select;

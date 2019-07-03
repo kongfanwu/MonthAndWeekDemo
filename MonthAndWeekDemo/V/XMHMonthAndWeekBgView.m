@@ -35,10 +35,8 @@ CGFloat kDateBarHeight = 50.f;
         self.dateNavBarView = [[XMHDateNavBarView alloc] initWithFrame:CGRectMake(0, 0, self.width, kDateBarHeight)];
         [self addSubview:_dateNavBarView];
         
-        XMHMonthAndWeekCollectionViewType type = XMHMonthAndWeekCollectionViewTypeWeek;
-        CGFloat monthAndWeekViewHeight = type == XMHMonthAndWeekCollectionViewTypeMonth ? 135 : 300;
-        self.monthAndWeekView = [[XMHMonthAndWeekView alloc] initWithFrame:CGRectMake(0, kDateBarHeight, self.width, monthAndWeekViewHeight)];
-        _monthAndWeekView.type = type;
+        self.monthAndWeekView = [[XMHMonthAndWeekView alloc] initWithFrame:CGRectMake(0, kDateBarHeight, self.width, self.height - kDateBarHeight)];
+        _monthAndWeekView.type = _type;
         [self addSubview:_monthAndWeekView];
         
         
@@ -48,6 +46,9 @@ CGFloat kDateBarHeight = 50.f;
         [_monthAndWeekView setFrameDidChangeBlock:^{
             __strong typeof(_self) self = _self;
             self.height = kDateBarHeight + self.monthAndWeekView.height;
+          
+            self.monthAndWeekView.frame = CGRectMake(0, kDateBarHeight, self.width, self.height - kDateBarHeight);
+            
             if (self.frameDidChangeBlock) self.frameDidChangeBlock();
         }];
         
