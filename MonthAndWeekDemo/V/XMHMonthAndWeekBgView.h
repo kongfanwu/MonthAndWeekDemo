@@ -28,6 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** default XMHMonthAndWeekCollectionViewTypeWeek */
 @property (nonatomic) XMHMonthAndWeekCollectionViewType type;
+
+/** 选中的日期，日期无序 */
+@property (nonatomic, strong, readonly) NSArray <XMHMonthAndWeekModel *> *dataArray;
 @end
 
 NS_ASSUME_NONNULL_END

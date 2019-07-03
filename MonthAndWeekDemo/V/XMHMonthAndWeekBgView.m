@@ -18,7 +18,8 @@ CGFloat kDateBarHeight = 50.f;
 @property (nonatomic, strong) XMHDateNavBarView *dateNavBarView;
 /** XMHMonthAndWeekView */
 @property (nonatomic, strong) XMHMonthAndWeekView *monthAndWeekView;
-
+/** 选中的日期，日期无序 */
+@property (nonatomic, strong) NSArray <XMHMonthAndWeekModel *> *dataArray;
 @end
 
 @implementation XMHMonthAndWeekBgView
@@ -65,6 +66,11 @@ CGFloat kDateBarHeight = 50.f;
 - (void)setIsFold:(BOOL)isFold {
     _isFold = isFold;
     _monthAndWeekView.isFold = _isFold;
+}
+
+- (NSArray<XMHMonthAndWeekModel *> *)dataArray {
+    _dataArray = _monthAndWeekView.collectionView.dataArray;
+    return _dataArray;
 }
 
 - (void)handleScopeGesture:(UIPanGestureRecognizer *)sender {
