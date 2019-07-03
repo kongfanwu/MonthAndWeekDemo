@@ -7,9 +7,7 @@
 //
 
 #import "XMHMonthAndWeekView.h"
-
-// 日期导航高
-CGFloat kDateBarHeight = 50.f;
+#import "XMHCollectionWeekCell.h"
 
 @interface XMHMonthAndWeekView()
 /** self 高 */
@@ -24,6 +22,8 @@ CGFloat kDateBarHeight = 50.f;
 @property (nonatomic) NSUInteger lineItemCount;
 /** 开始滑动偏移量 */
 @property(nonatomic) CGPoint beginContentOffset;
+/** 获取可见屏幕最小Y */
+@property (nonatomic) CGFloat beginVisibleY;
 @end
 
 @implementation XMHMonthAndWeekView
@@ -32,38 +32,41 @@ CGFloat kDateBarHeight = 50.f;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _isFold = YES;
+        self.isFold = YES;
         _type = XMHMonthAndWeekCollectionViewTypeWeek;
-        self.originHeight = self.height - kDateBarHeight;
+        self.originHeight = self.height;
         
-        self.dateNavBarView = [[XMHDateNavBarView alloc] initWithFrame:CGRectMake(0, 0, self.width, kDateBarHeight)];
-        [self addSubview:_dateNavBarView];
+
         
         UICollectionViewScrollDirection direction = UICollectionViewScrollDirectionVertical;
         UICollectionViewFlowLayout *layout = [XMHMonthAndWeekCollectionView layoutFromScrollDirection:direction];
-        self.collectionView = [[XMHMonthAndWeekCollectionView alloc] initWithFrame:CGRectMake(0, kDateBarHeight, self.width, self.height - kDateBarHeight) collectionViewLayout:layout];
+        self.collectionView = [[XMHMonthAndWeekCollectionView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.originHeight) collectionViewLayout:layout];
         _collectionView.xmhScrollDirection = direction;
         [self addSubview:_collectionView];
         
-        _cellMinHeight = [XMHMonthAndWeekCollectionView cellHeightType:_collectionView.type];
-        _cellMinHeight += kDateBarHeight;
-        [_collectionView reloadData];
+        [self configIvars];
         
-        _cellMinimumLineSpacing = [XMHMonthAndWeekCollectionView cellMinimumLineSpacingType:_collectionView.type];
-        _cellMinimumInteritemSpacing = [XMHMonthAndWeekCollectionView cellMinimumInteritemSpacingType:_collectionView.type];
-        _lineItemCount = [XMHMonthAndWeekCollectionView lineItemCountType:_collectionView.type];
+        [_collectionView reloadData];
     }
     return self;
 }
 
+- (void)configIvars {
+    _cellMinHeight = [XMHMonthAndWeekCollectionView cellHeightType:_collectionView.type];
+    _cellMinimumLineSpacing = [XMHMonthAndWeekCollectionView cellMinimumLineSpacingType:_collectionView.type];
+    _cellMinimumInteritemSpacing = [XMHMonthAndWeekCollectionView cellMinimumInteritemSpacingType:_collectionView.type];
+    _lineItemCount = [XMHMonthAndWeekCollectionView lineItemCountType:_collectionView.type];
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.collectionView.frame = CGRectMake(0, kDateBarHeight, self.width, self.height - kDateBarHeight);
+    self.collectionView.frame = CGRectMake(0, 0, self.width, self.height);
 }
 
 - (void)setType:(XMHMonthAndWeekCollectionViewType)type {
     _type = type;
     _collectionView.type = _type;
+    [self configIvars];
 }
 
 #pragma mark - Public
@@ -94,11 +97,24 @@ CGFloat kDateBarHeight = 50.f;
 #pragma mark - Private
 
 - (void)scopeTransitionDidBegan:(UIPanGestureRecognizer *)sender {
+    // 收起
+    if (self.isFold) {
+        // 获取可见屏幕最小Y
+        CGFloat beginVisibleYVar = MAXFLOAT;
+        for (int i = 0; i < self.collectionView.visibleCells.count; i++) {
+            XMHCollectionWeekCell *cell = self.collectionView.visibleCells[i];
+            CGFloat tmp = CGRectGetMinY(cell.frame);
+            if (tmp < beginVisibleYVar) {
+                beginVisibleYVar = tmp;
+            }
+        }
+        self.beginVisibleY = beginVisibleYVar;
+    }
     // 记录开始滑动时，之前的偏移量
     self.beginContentOffset = _collectionView.contentOffset;
-    
+//    self.beginVisibleY = CGRectGetMinY(((UIView *)self.collectionView.visibleCells.firstObject).frame);
     // 收起状态
-    if (!_isFold) {
+    if (!self.isFold) {
         // 展开布局
         _collectionView.xmhScrollDirection = UICollectionViewScrollDirectionVertical;
     }
@@ -106,9 +122,9 @@ CGFloat kDateBarHeight = 50.f;
 
 - (void)scopeTransitionDidUpdate:(UIPanGestureRecognizer *)sender {
     CGFloat translation = ABS([sender translationInView:sender.view].y);
-//    NSLog(@"translation:%lf", translation);
+    NSLog(@"self.isFold:%d translation:%lf", self.isFold, translation);
     // 收起
-    if (_isFold) {
+    if (self.isFold) {
         if (self.height > _cellMinHeight) {
             self.height = _originHeight  - translation;
             [self foldCollectionViewTranslation:translation];
@@ -135,11 +151,11 @@ CGFloat kDateBarHeight = 50.f;
 
 - (void)scopeTransitionDidEnd:(UIPanGestureRecognizer *)sender {
     // 展开状态
-    if (_isFold) {
+    if (self.isFold) {
         // 收起
         self.height = _cellMinHeight;
         [self foldCollectionViewTranslation:_originHeight - _cellMinHeight];
-        _isFold = NO;
+        self.isFold = NO;
         
         if (self.frameDidChangeBlock) self.frameDidChangeBlock();
         
@@ -152,8 +168,8 @@ CGFloat kDateBarHeight = 50.f;
     else {
         // 展开
         self.height = _originHeight;
-        [self noFoldCollectionViewTranslation:_originHeight - _cellMinHeight];
-        _isFold = YES;
+        [self noFoldCollectionViewTranslation:_originHeight - (_cellMinHeight)];
+        self.isFold = YES;
     
         if (self.frameDidChangeBlock) self.frameDidChangeBlock();
         
@@ -198,13 +214,14 @@ CGFloat kDateBarHeight = 50.f;
     CGFloat upOffsetYGap = CGRectGetMinY(_collectionView.lastFrame);
 //    CGFloat bottomOffsetYGap = CGRectGetMaxY(_collectionView.lastFrame);
     
+    CGFloat jiPingHeight = upOffsetYGap - (upOffsetYGap - _beginVisibleY);
     // 目标位置在第几屏高
-    NSInteger jiPing = floor(upOffsetYGap / _originHeight);
-    CGFloat jiPingHeight = jiPing * _originHeight;
+//    NSInteger jiPing = floor(upOffsetYGap / (_originHeight));
+//    CGFloat jiPingHeight = jiPing * (_originHeight);
     
     // 计算需要滑动的距离 = upOffsetYGap - 目标位置在第几屏高（屏高是 _originHeight），之前的屏高。例如在第5屏，之前的屏高就是 （4 * _originHeight）
     CGFloat computeScrollGap = upOffsetYGap - jiPingHeight;
-    CGFloat baiFenBi = computeScrollGap / (_originHeight - (_cellMinHeight - kDateBarHeight));
+    CGFloat baiFenBi = computeScrollGap / (_originHeight - _cellMinHeight);
     // 180 - translation(10) * 0.72
     CGFloat upOffsetY = upOffsetYGap - (baiFenBi * translation);
 //    NSLog(@"translation:%f upOffsetY:%lf baiFenBi:%lf", translation, upOffsetY, baiFenBi);
@@ -222,10 +239,10 @@ CGFloat kDateBarHeight = 50.f;
 - (void)foldStateSelectCellPositionAlign {
     // 收起后、collectionView 为 UICollectionViewScrollDirectionHorizontal 后。将展开状态选中的按钮 X 位置,映射到收起状态相同的 X 位置.
     // 选中按钮之前有几行
-    NSInteger lineCount = _collectionView.lastFrame.origin.y / ((_cellMinHeight - kDateBarHeight) + _cellMinimumLineSpacing);
+    NSInteger lineCount = _collectionView.lastFrame.origin.y / (_cellMinHeight + _cellMinimumLineSpacing);
     // 便宜X位置 = 每个按钮宽 * 每行有几个按钮 * 几行.  只需要计算选中按钮之前有几行的偏移量即可。
     CGFloat offsetX = ((_collectionView.lastFrame.size.width + _cellMinimumInteritemSpacing) * _lineItemCount) * lineCount;
-    NSLog(@"foldStateSelectCellPositionAlign:%lf", offsetX);
+//    NSLog(@"foldStateSelectCellPositionAlign:%lf", offsetX);
     [_collectionView setContentOffset:CGPointMake(offsetX, _collectionView.contentOffset.y)];
 }
 

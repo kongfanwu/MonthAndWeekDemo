@@ -15,10 +15,12 @@
 @end
 
 @implementation XMHCollectionWeekCell
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
         self.button = [UIButton buttonWithType:UIButtonTypeCustom];
         _button.backgroundColor = UIColor.whiteColor;
         [_button setTitleColor:kColor6 forState:UIControlStateNormal];

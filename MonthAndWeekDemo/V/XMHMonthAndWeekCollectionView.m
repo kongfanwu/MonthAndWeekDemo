@@ -12,7 +12,8 @@
 #import "XMHMonthAndWeekModel.h"
 
 @interface XMHMonthAndWeekCollectionView() <UICollectionViewDelegate, UICollectionViewDataSource>
-
+/** 选中的model集合 */
+@property (nonatomic, strong) NSMutableArray *selectModelArray;
 @end
 
 @implementation XMHMonthAndWeekCollectionView
@@ -45,6 +46,12 @@
     _xmhScrollDirection = xmhScrollDirection;
     self.collectionViewLayout = [self.class layoutFromScrollDirection:xmhScrollDirection];
     [self reloadData];
+}
+
+- (NSMutableArray *)selectModelArray {
+    if (_selectModelArray) return _selectModelArray;
+    _selectModelArray = NSMutableArray.new;
+    return _selectModelArray;
 }
 
 #pragma mark - Public
@@ -109,12 +116,10 @@
     XMHMonthAndWeekModel *model = _dataArray[indexPath.item];
     if (_type == XMHMonthAndWeekCollectionViewTypeWeek) {
         XMHCollectionWeekCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"XMHCollectionWeekCellIdentifier" forIndexPath:indexPath];
-        cell.label.text = [NSString stringWithFormat:@"%ld",indexPath.item];
         [cell configModel:model];
         return cell;
     } else {
         XMHCollectionMonthCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"XMHCollectionMonthCellIdentifier" forIndexPath:indexPath];
-        cell.backgroundColor = [UIColor colorWithRed:arc4random_uniform(150)/255.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:1];
         [cell configModel:model];
         return cell;
     }
@@ -153,12 +158,18 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    self.lastFrame = cell.frame;
+    
     XMHMonthAndWeekModel *model = _dataArray[indexPath.item];
     model.select = !model.select;
     [collectionView reloadData];
-
-    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    self.lastFrame = cell.frame;
+    
+    if ([self.selectModelArray containsObject:model]) {
+        [self.selectModelArray removeObject:model];
+    } else {
+        if (model.select) [self.selectModelArray addObject:model];
+    }
 }
 
 @end

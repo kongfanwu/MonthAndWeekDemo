@@ -26,6 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 最后一个cell frame */
 @property(nonatomic) CGRect lastFrame;
+/** <##> */
+@property (nonatomic) CGFloat beginVisibleY;
 
 /**
  滑动方向
@@ -36,6 +38,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** <##> */
 @property (nonatomic, strong) NSArray <XMHMonthAndWeekModel *> *dataArray;
+
+/** 选中的model集合 */
+@property (nonatomic, strong, readonly) NSMutableArray *selectModelArray;
 
 /**
  返回cell 高

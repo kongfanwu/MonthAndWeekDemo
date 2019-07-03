@@ -9,14 +9,17 @@
 #import "ViewController.h"
 #import "XMHMonthAndWeekView.h"
 #import "XMHMonthAndWeekModel.h"
+#import "XMHMonthAndWeekBgView.h"
 
 @interface ViewController ()<UITableViewDataSource,UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) UIPanGestureRecognizer *scopeGesture;
 /** <##> */
-@property (nonatomic, strong) XMHMonthAndWeekView *monthAndWeekView;
+@property (nonatomic, strong) XMHMonthAndWeekBgView *monthAndWeekView;
 /** <##> */
 @property (nonatomic, strong) NSDate *currentDate;
+/** 月数据 */
+@property (nonatomic, strong) NSMutableArray *monthDataArray;
 @end
 
 @implementation ViewController
@@ -44,8 +47,11 @@
 }
 
 - (void)loadTopView {
-    self.monthAndWeekView = [[XMHMonthAndWeekView alloc] initWithFrame:CGRectMake(0, kSafeAreaTop, self.view.width, 300 + kDateBarHeight)];
-    _monthAndWeekView.type = XMHMonthAndWeekCollectionViewTypeWeek;
+    XMHMonthAndWeekCollectionViewType type = XMHMonthAndWeekCollectionViewTypeMonth;
+    CGFloat monthAndWeekViewHeight = type == XMHMonthAndWeekCollectionViewTypeMonth ? 135 + kDateBarHeight : 300 + kDateBarHeight;
+    self.monthAndWeekView = [[XMHMonthAndWeekBgView alloc] initWithFrame:CGRectMake(0, kSafeAreaTop, self.view.width, monthAndWeekViewHeight)];
+    _monthAndWeekView.type = type;
+    _monthAndWeekView.isFold = YES;
     [self.view addSubview:_monthAndWeekView];
     
     __weak typeof(self) _self = self;
@@ -56,21 +62,17 @@
    
     [_monthAndWeekView.dateNavBarView setChangeYearBlock:^(NSInteger tag) {
         __strong typeof(_self) self = _self;
-        if (self.monthAndWeekView.type == XMHMonthAndWeekCollectionViewTypeWeek) {
-            NSUInteger year = self.currentDate.year;
-            // 左
-            if (tag == 1) {
-                year--;
-            }
-            // 右
-            else if (tag == 2) {
-                year++;
-            }
-            self.currentDate = [NSDate dateFromYear:(int)year Month:1 Day:1];
-            [self getData];
-        } else {
-            
+        NSUInteger year = self.currentDate.year;
+        // 左
+        if (tag == 1) {
+            year--;
         }
+        // 右
+        else if (tag == 2) {
+            year++;
+        }
+        self.currentDate = [NSDate dateFromYear:(int)year Month:1 Day:1];
+        [self getData];
     }];
     
     
@@ -79,8 +81,9 @@
 }
 
 - (void)getData {
+    [_monthAndWeekView.dateNavBarView setYear:_currentDate.getYear];
+    
     if (_monthAndWeekView.type == XMHMonthAndWeekCollectionViewTypeWeek) {
-        [_monthAndWeekView.dateNavBarView setYear:_currentDate.getYear];
         __block NSMutableArray *dataArray = NSMutableArray.new;
         [[_currentDate getAllWeekDate] enumerateObjectsUsingBlock:^(NSArray *item, NSUInteger idx, BOOL * _Nonnull stop) {
             XMHMonthAndWeekModel *model = XMHMonthAndWeekModel.new;
@@ -92,7 +95,16 @@
         }];
         _monthAndWeekView.collectionView.dataArray = dataArray;
     } else {
-        
+        if (!self.monthDataArray) {
+            self.monthDataArray = NSMutableArray.new;
+            for (int i = 1; i <= 12; i++) {
+                XMHMonthAndWeekModel *model = XMHMonthAndWeekModel.new;
+                model.firstDate = [NSDate dateFromYear:1970 Month:i Day:1];
+                model.title = [NSString stringWithFormat:@"%ld月", model.firstDate.month];
+                [self.monthDataArray addObject:model];
+            }
+            _monthAndWeekView.collectionView.dataArray = self.monthDataArray;
+        }
     }
 }
 

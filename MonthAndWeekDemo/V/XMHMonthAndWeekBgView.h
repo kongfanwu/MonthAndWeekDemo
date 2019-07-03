@@ -1,13 +1,13 @@
 //
-//  XMHMonthAndWeekView.h
-//  FSCalendarExample
+//  XMHMonthAndWeekBgView.h
+//  MonthAndWeekDemo
 //
-//  Created by kfw on 2019/7/1.
-//  Copyright © 2019 wenchaoios. All rights reserved.
+//  Created by kfw on 2019/7/3.
+//  Copyright © 2019 kfw. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "XMHMonthAndWeekCollectionView.h"
+#import "XMHMonthAndWeekView.h"
 #import "XMHDateNavBarView.h"
 
 // 日期导航高
@@ -15,11 +15,11 @@ extern CGFloat kDateBarHeight;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XMHMonthAndWeekView : UIView
+@interface XMHMonthAndWeekBgView : UIView
 /** <##> */
-@property (nonatomic, strong) XMHMonthAndWeekCollectionView *collectionView;
+@property (nonatomic, strong, readonly) XMHMonthAndWeekCollectionView *collectionView;
 /** <##> */
-@property (nonatomic, strong) XMHDateNavBarView *dateNavBarView;
+@property (nonatomic, strong, readonly) XMHDateNavBarView *dateNavBarView;
 - (void)handleScopeGesture:(UIPanGestureRecognizer *)sender;
 /** 默认 YES 收起 NO 展开 */
 @property (nonatomic) BOOL isFold;
