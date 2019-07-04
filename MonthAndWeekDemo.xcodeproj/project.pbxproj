@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F285346F22C9E8DD00C2430C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F285346E22C9E8DD00C2430C /* AppDelegate.m */; };
-		F285347222C9E8DD00C2430C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F285347122C9E8DD00C2430C /* ViewController.m */; };
+		F285347222C9E8DD00C2430C /* XMHMonthWeekVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F285347122C9E8DD00C2430C /* XMHMonthWeekVC.m */; };
 		F285347522C9E8DD00C2430C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F285347322C9E8DD00C2430C /* Main.storyboard */; };
 		F285347722C9E8DD00C2430C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F285347622C9E8DD00C2430C /* Assets.xcassets */; };
 		F285347A22C9E8DD00C2430C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F285347822C9E8DD00C2430C /* LaunchScreen.storyboard */; };
@@ -25,14 +25,15 @@
 		F28534C822CB7D9900C2430C /* XMHMonthAndWeekModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F28534C722CB7D9900C2430C /* XMHMonthAndWeekModel.m */; };
 		F28534CB22CB82C300C2430C /* ColorTools.m in Sources */ = {isa = PBXBuildFile; fileRef = F28534CA22CB82C300C2430C /* ColorTools.m */; };
 		F28534D222CC918900C2430C /* XMHMonthAndWeekBgView.m in Sources */ = {isa = PBXBuildFile; fileRef = F28534D122CC918900C2430C /* XMHMonthAndWeekBgView.m */; };
+		F28534D622CCDBBC00C2430C /* Aspects.m in Sources */ = {isa = PBXBuildFile; fileRef = F28534D522CCDBBB00C2430C /* Aspects.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F285346A22C9E8DD00C2430C /* MonthAndWeekDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonthAndWeekDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F285346D22C9E8DD00C2430C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F285346E22C9E8DD00C2430C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		F285347022C9E8DD00C2430C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		F285347122C9E8DD00C2430C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		F285347022C9E8DD00C2430C /* XMHMonthWeekVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMHMonthWeekVC.h; sourceTree = "<group>"; };
+		F285347122C9E8DD00C2430C /* XMHMonthWeekVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMHMonthWeekVC.m; sourceTree = "<group>"; };
 		F285347422C9E8DD00C2430C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F285347622C9E8DD00C2430C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F285347922C9E8DD00C2430C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -62,6 +63,8 @@
 		F28534CA22CB82C300C2430C /* ColorTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorTools.m; sourceTree = "<group>"; };
 		F28534D022CC918900C2430C /* XMHMonthAndWeekBgView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMHMonthAndWeekBgView.h; sourceTree = "<group>"; };
 		F28534D122CC918900C2430C /* XMHMonthAndWeekBgView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMHMonthAndWeekBgView.m; sourceTree = "<group>"; };
+		F28534D422CCDBBB00C2430C /* Aspects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Aspects.h; sourceTree = "<group>"; };
+		F28534D522CCDBBB00C2430C /* Aspects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Aspects.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +97,7 @@
 		F285346C22C9E8DD00C2430C /* MonthAndWeekDemo */ = {
 			isa = PBXGroup;
 			children = (
+				F28534D322CCDBBB00C2430C /* Aspects */,
 				F28534CF22CC8DB600C2430C /* M */,
 				F28534CE22CC8DB100C2430C /* V */,
 				F28534CD22CC8DA800C2430C /* C */,
@@ -129,8 +133,8 @@
 		F28534CD22CC8DA800C2430C /* C */ = {
 			isa = PBXGroup;
 			children = (
-				F285347022C9E8DD00C2430C /* ViewController.h */,
-				F285347122C9E8DD00C2430C /* ViewController.m */,
+				F285347022C9E8DD00C2430C /* XMHMonthWeekVC.h */,
+				F285347122C9E8DD00C2430C /* XMHMonthWeekVC.m */,
 			);
 			path = C;
 			sourceTree = "<group>";
@@ -161,6 +165,15 @@
 				F28534C722CB7D9900C2430C /* XMHMonthAndWeekModel.m */,
 			);
 			path = M;
+			sourceTree = "<group>";
+		};
+		F28534D322CCDBBB00C2430C /* Aspects */ = {
+			isa = PBXGroup;
+			children = (
+				F28534D422CCDBBB00C2430C /* Aspects.h */,
+				F28534D522CCDBBB00C2430C /* Aspects.m */,
+			);
+			path = Aspects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,10 +248,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F28534D222CC918900C2430C /* XMHMonthAndWeekBgView.m in Sources */,
-				F285347222C9E8DD00C2430C /* ViewController.m in Sources */,
+				F285347222C9E8DD00C2430C /* XMHMonthWeekVC.m in Sources */,
 				F285348522C9E90A00C2430C /* XMHMonthAndWeekView.m in Sources */,
 				F28534CB22CB82C300C2430C /* ColorTools.m in Sources */,
 				F28534BC22CB59C300C2430C /* XMHDateNavBarView.m in Sources */,
+				F28534D622CCDBBC00C2430C /* Aspects.m in Sources */,
 				F285349422CA028F00C2430C /* XMHCollectionMonthCell.m in Sources */,
 				F28534C822CB7D9900C2430C /* XMHMonthAndWeekModel.m in Sources */,
 				F285349122CA028300C2430C /* XMHCollectionWeekCell.m in Sources */,

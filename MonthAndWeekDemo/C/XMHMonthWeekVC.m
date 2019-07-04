@@ -6,12 +6,12 @@
 //  Copyright © 2019 kfw. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "XMHMonthWeekVC.h"
 #import "XMHMonthAndWeekView.h"
 #import "XMHMonthAndWeekModel.h"
 #import "XMHMonthAndWeekBgView.h"
 
-@interface ViewController ()<UITableViewDataSource,UITableViewDelegate, UIGestureRecognizerDelegate>
+@interface XMHMonthWeekVC ()<UITableViewDataSource,UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) UIPanGestureRecognizer *scopeGesture;
 /** <##> */
@@ -22,7 +22,7 @@
 @property (nonatomic, strong) NSMutableArray *monthDataArray;
 @end
 
-@implementation ViewController
+@implementation XMHMonthWeekVC
 
 
 - (void)viewDidLoad {

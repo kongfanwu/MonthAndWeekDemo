@@ -7,9 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import "Aspects.h"
 
 @interface AppDelegate ()
-
+/** <#type#> */
+@property (nonatomic, copy) BOOL (^block)(NSString *a);
 @end
 
 @implementation AppDelegate
@@ -17,9 +19,48 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+//    [self setBlock:^BOOL(NSString *a) {
+//        NSLog(@"%@", a);
+//        return YES;
+//    }];
+//
+//    BOOL r = self.block(@"name");
+//    NSLog(@"%ld", r);
+    
+//    [self test:^BOOL(NSString * a) {
+//        NSLog(@"%@", a);
+//        return YES;
+//    }];
+    
+    
+    [self aspect_hookSelector:@selector(pringa:) withOptions:AspectPositionInstead usingBlock:^(id<AspectInfo> aspectInfo, NSString *string) {
+        NSLog(@"%@: %@ %@", aspectInfo.instance, aspectInfo.arguments, string);
+//        return @"xiaoming";
+        NSString * processTouches;
+        NSInvocation *invocation = aspectInfo.originalInvocation;
+        [invocation invoke];
+        [invocation getReturnValue:&processTouches];
+        
+        if (processTouches) {
+            processTouches =  @"xiaoming";//pspdf_stylusShouldProcessTouches(touches, event);
+            [invocation setReturnValue:&processTouches];
+        }
+    } error:NULL];
+    
+    NSString *res = [self pringa:@"kongfanwu"];
+    NSLog(@"res:%@", res);
     return YES;
 }
 
+- (NSString *)pringa:(NSString *)name {
+    return @"futing";
+}
+
+- (void)test:(BOOL(^)(NSString * a))block {
+    NSLog(@"test");
+    BOOL m = block(@"123");
+    NSLog(@"m:%ld", m);
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
