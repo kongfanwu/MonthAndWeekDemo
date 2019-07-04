@@ -23,7 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface XMHMonthAndWeekCollectionView : UICollectionView
 /** default XMHMonthAndWeekCollectionViewTypeWeek */
 @property (nonatomic) XMHMonthAndWeekCollectionViewType type;
-
+/** 默认 YES:展开状态 NO：收起状态  */
+@property (nonatomic) BOOL isFold;
 /** 最后一个cell frame */
 @property(nonatomic) CGRect lastFrame;
 /** <##> */
@@ -53,12 +54,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  返回cell 行间距
  */
-+ (CGFloat)cellMinimumLineSpacingType:(XMHMonthAndWeekCollectionViewType)type;
++ (CGFloat)cellMinimumLineSpacingType:(XMHMonthAndWeekCollectionViewType)type fold:(BOOL)isFold;
 
 /**
  返回cell 间间距
  */
-+ (CGFloat)cellMinimumInteritemSpacingType:(XMHMonthAndWeekCollectionViewType)type;
++ (CGFloat)cellMinimumInteritemSpacingType:(XMHMonthAndWeekCollectionViewType)type fold:(BOOL)isFold;
 
 /**
  每行cell 数量

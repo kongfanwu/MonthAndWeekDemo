@@ -71,23 +71,51 @@
 /**
  返回cell 行间距
  */
-+ (CGFloat)cellMinimumLineSpacingType:(XMHMonthAndWeekCollectionViewType)type {
-    if (type == XMHMonthAndWeekCollectionViewTypeWeek) {
-        return 10;
++ (CGFloat)cellMinimumLineSpacingType:(XMHMonthAndWeekCollectionViewType)type fold:(BOOL)isFold {
+    /* 注意
+     UICollectionViewScrollDirectionVertical： inimumLine 为行间距，MinimumInteritem 为竖间距
+     UICollectionViewScrollDirectionHorizontal: inimumLine 为竖间距 MinimumInteritem 为行间距
+     */
+    // 展开状态
+    if (isFold) {
+        // 行间距
+        if (type == XMHMonthAndWeekCollectionViewTypeWeek) {
+            return 10;
+        } else {
+            return 20;
+        }
     } else {
-        return 20;
+        // 列间距
+        if (type == XMHMonthAndWeekCollectionViewTypeWeek) {
+            return 10;
+        } else {
+            return 50;
+        }
     }
+    return 0;
 }
 
 /**
  返回cell 间间距
  */
-+ (CGFloat)cellMinimumInteritemSpacingType:(XMHMonthAndWeekCollectionViewType)type {
-    if (type == XMHMonthAndWeekCollectionViewTypeWeek) {
-        return 10;
++ (CGFloat)cellMinimumInteritemSpacingType:(XMHMonthAndWeekCollectionViewType)type fold:(BOOL)isFold {
+    // 展开状态
+    if (isFold) {
+        // 列间距
+        if (type == XMHMonthAndWeekCollectionViewTypeWeek) {
+            return 10;
+        } else {
+            return 50;
+        }
     } else {
-        return 27;
+        // 行间距
+        if (type == XMHMonthAndWeekCollectionViewTypeWeek) {
+            return 10;
+        } else {
+            return 20;
+        }
     }
+    return 0;
 }
 
 /**
@@ -131,6 +159,7 @@
         return cell;
     } else {
         XMHCollectionMonthCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"XMHCollectionMonthCellIdentifier" forIndexPath:indexPath];
+        cell.backgroundColor = [UIColor colorWithRed:arc4random_uniform(255)/255.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:1];
         [cell configModel:model];
         return cell;
     }
@@ -140,7 +169,13 @@
 #pragma mark - UICollectionViewDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat minimumInteritemSpacing = [self.class cellMinimumInteritemSpacingType:_type];
+    CGFloat minimumInteritemSpacing = 0;
+    if (_isFold) {
+        minimumInteritemSpacing = [self.class cellMinimumInteritemSpacingType:_type fold:_isFold];
+    } else {
+        minimumInteritemSpacing = [self.class cellMinimumLineSpacingType:_type fold:_isFold];
+    }
+    
     NSInteger lineItemCount = [self.class lineItemCountType:_type];
     UIEdgeInsets sectionEdge = [self.class insetForSectionType:_type];
     if (_type == XMHMonthAndWeekCollectionViewTypeWeek) {
@@ -148,7 +183,7 @@
         return CGSizeMake(itemW, [self.class cellHeightType:_type]);
     } else {
         CGFloat itemW = (collectionView.width - (minimumInteritemSpacing * (lineItemCount - 1)) - (sectionEdge.left + sectionEdge.right)) / lineItemCount;
-        return CGSizeMake(itemW, [self.class cellHeightType:_type]);
+        return CGSizeMake(itemW, [self.class cellHeightType:_type]); // 78.5 56.25
     }
 }
 
@@ -157,11 +192,12 @@
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return [self.class cellMinimumLineSpacingType:_type];
+    return [self.class cellMinimumLineSpacingType:_type fold:_isFold];
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return [self.class cellMinimumInteritemSpacingType:_type];
+    CGFloat gap = [self.class cellMinimumInteritemSpacingType:_type fold:_isFold];
+    return gap;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -182,5 +218,7 @@
         if (model.select) [self.selectModelArray addObject:model];
     }
 }
+
+
 
 @end

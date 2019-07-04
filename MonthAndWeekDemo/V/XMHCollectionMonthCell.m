@@ -34,6 +34,11 @@
     return self;
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    _button.frame = CGRectMake(0, 0, self.width, self.height);
+}
+
 - (void)configModel:(XMHMonthAndWeekModel *)model {
     [_button setTitle:model.title forState:UIControlStateNormal];
     if (model.select) {

@@ -39,6 +39,7 @@
         UICollectionViewScrollDirection direction = UICollectionViewScrollDirectionVertical;
         UICollectionViewFlowLayout *layout = [XMHMonthAndWeekCollectionView layoutFromScrollDirection:direction];
         self.collectionView = [[XMHMonthAndWeekCollectionView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.originHeight) collectionViewLayout:layout];
+        _collectionView.isFold = _isFold;
         _collectionView.xmhScrollDirection = direction;
         [self addSubview:_collectionView];
         
@@ -51,8 +52,8 @@
 
 - (void)configIvars {
     _cellMinHeight = [XMHMonthAndWeekCollectionView cellHeightType:_collectionView.type];
-    _cellMinimumLineSpacing = [XMHMonthAndWeekCollectionView cellMinimumLineSpacingType:_collectionView.type];
-    _cellMinimumInteritemSpacing = [XMHMonthAndWeekCollectionView cellMinimumInteritemSpacingType:_collectionView.type];
+    _cellMinimumLineSpacing = [XMHMonthAndWeekCollectionView cellMinimumLineSpacingType:_collectionView.type fold:_isFold];
+    _cellMinimumInteritemSpacing = [XMHMonthAndWeekCollectionView cellMinimumInteritemSpacingType:_collectionView.type fold:_isFold];
     _lineItemCount = [XMHMonthAndWeekCollectionView lineItemCountType:_collectionView.type];
 }
 
@@ -65,6 +66,11 @@
     _type = type;
     _collectionView.type = _type;
     [self configIvars];
+}
+
+- (void)setIsFold:(BOOL)isFold {
+    _isFold = isFold;
+    _collectionView.isFold = _isFold;
 }
 
 #pragma mark - Public
@@ -95,7 +101,7 @@
 #pragma mark - Private
 
 - (void)scopeTransitionDidBegan:(UIPanGestureRecognizer *)sender {
-    // 收起
+    // 展开
     if (self.isFold) {
         // 获取可见屏幕最小Y
         CGFloat beginVisibleYVar = MAXFLOAT;
@@ -113,6 +119,7 @@
 //    self.beginVisibleY = CGRectGetMinY(((UIView *)self.collectionView.visibleCells.firstObject).frame);
     // 收起状态
     if (!self.isFold) {
+        _collectionView.isFold = YES;// 提前通知布局方式
         // 展开布局
         _collectionView.xmhScrollDirection = UICollectionViewScrollDirectionVertical;
     }
@@ -240,10 +247,10 @@
     NSInteger lineCount = _collectionView.lastFrame.origin.y / (_cellMinHeight + _cellMinimumLineSpacing);
     // 便宜X位置 = 每个按钮宽 * 每行有几个按钮 * 几行.  只需要计算选中按钮之前有几行的偏移量即可。
     CGFloat offsetX = ((_collectionView.lastFrame.size.width + _cellMinimumInteritemSpacing) * _lineItemCount) * lineCount;
-    if (_type == XMHMonthAndWeekCollectionViewTypeMonth && lineCount > 0) {
-        // 与item间间距，与边缘，不同。
-        offsetX -= _cellMinimumInteritemSpacing;
-    }
+//    if (_type == XMHMonthAndWeekCollectionViewTypeMonth && lineCount > 0) {
+//        // 与item间间距，与边缘，不同。
+//        offsetX -= _cellMinimumInteritemSpacing;
+//    }
     NSLog(@"foldStateSelectCellPositionAlign:%lf", offsetX);
     [_collectionView setContentOffset:CGPointMake(offsetX, _collectionView.contentOffset.y)];
 }

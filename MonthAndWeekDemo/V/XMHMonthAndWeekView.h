@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) XMHMonthAndWeekCollectionView *collectionView;
 
 - (void)handleScopeGesture:(UIPanGestureRecognizer *)sender;
-/** 默认 YES 收起 NO 展开 */
+/** 默认 YES:展开状态 NO：收起状态  */
 @property (nonatomic) BOOL isFold;
 /** <#type#> */
 @property (nonatomic, copy) void (^frameDidChangeBlock)(void);
